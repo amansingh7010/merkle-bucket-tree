@@ -58,7 +58,7 @@ class HashMap<K, V> {
     bucketArray.set(bucketIndex, newNode);
 
     // increase hash table size if current size go beyond load factor
-    if(getCurrentSize() / numberOfBuckets >= 0.8) {
+    if(getCurrentSize() / numberOfBuckets >= LOAD_FACTOR) {
       ArrayList<Node<K, V>> temp = bucketArray;
       bucketArray = new ArrayList<>();
       numberOfBuckets = 2 * numberOfBuckets;
