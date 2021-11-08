@@ -1,3 +1,5 @@
+package src;
+
 class Node<K, V> {
   K key;
   V value;
