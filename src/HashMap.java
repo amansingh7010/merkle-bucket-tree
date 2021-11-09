@@ -27,7 +27,7 @@ class HashMap<K, V> {
   public int getCurrentSize() { 
     return currentSize; 
   }
-   
+  
   private final int calcHashCode(K key) {
     return Objects.hashCode(key);
   }

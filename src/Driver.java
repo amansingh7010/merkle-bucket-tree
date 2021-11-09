@@ -1,15 +1,31 @@
 package src;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import org.json.simple.*;
+import org.json.simple.parser.*;
+
 public class Driver {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException, FileNotFoundException {
     HashMap<Integer, String> studentList = new HashMap<>();
-    studentList.add(22, "Aman");
-    studentList.add(443, "Abhishek");
-    studentList.add(12, "Rahul");
-    studentList.add(40, "Priya");
-    studentList.add(44, "newwww");
-    
-    System.out.println(studentList.getCurrentSize());
-    System.out.println(studentList.get(44));
+    JSONParser parser = new JSONParser();
+
+    try{
+      Object obj = parser.parse(new FileReader("D:/UNB/CS6545_Big_Data_Systems/Project/merkle-bucket-tree/resources/data.json"));
+      JSONObject json = new JSONObject();
+      json = (JSONObject) obj;
+      JSONArray jsonArray = (JSONArray) json.get("studentList");
+      for (int i = 0; i < jsonArray.size(); i++){
+        JSONObject student = (JSONObject) jsonArray.get(i);
+        long id = (long) student.get("_id");
+        String name = (String) student.get("name");
+        studentList.add((int) id, name);
+        System.out.println(studentList.get((int) id));
+      }
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
   }
 }
