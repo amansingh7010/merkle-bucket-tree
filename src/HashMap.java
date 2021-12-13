@@ -22,10 +22,13 @@ class HashMap<K, V> {
       bucketArray.add(null);
     }
   }
-
   
   public int getCurrentSize() { 
     return currentSize; 
+  }
+
+  public int getBucketSize() {
+    return this.bucketArray.size();
   }
   
   private final int calcHashCode(K key) {
@@ -124,4 +127,5 @@ class HashMap<K, V> {
 
     return head.value;
   }
+
 }
