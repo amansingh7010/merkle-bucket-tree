@@ -12,7 +12,7 @@ public class Driver {
     JSONParser parser = new JSONParser();
 
     try{
-      Object obj = parser.parse(new FileReader("C:/Users/amans/OneDrive - University of New Brunswick/UNB Study/Fall 2021/CS-6545 - Big Data/Project/merkle-bucket-tree/resources/data.json"));
+      Object obj = parser.parse(new FileReader("D:/UNB/CS6545_Big_Data_Systems/Project/merkle-bucket-tree/resources/data.json"));
       JSONObject json = new JSONObject();
       json = (JSONObject) obj;
       JSONArray jsonArray = (JSONArray) json.get("studentList");
@@ -22,10 +22,11 @@ public class Driver {
         String name = (String) student.get("name");
         studentList.add((int) id, name);
         System.out.println(studentList.get((int) id));
+        System.out.println(studentList);
       }
 
       System.out.println("Number of Buckets: " + studentList.getBucketSize());
-      MerkleBucketTree merkleBucketTree = new MerkleBucketTree(studentList.getBucketSize());
+      MerkleBucketTree merkleBucketTree = new MerkleBucketTree(studentList);
       System.out.println(merkleBucketTree.getRoot());
     }
     catch(Exception e){

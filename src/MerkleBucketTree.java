@@ -5,16 +5,29 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-public class MerkleBucketTree {
+public class MerkleBucketTree<K,V> {
 
   String root;
 
-  public MerkleBucketTree(int bucketSize) {
+  public MerkleBucketTree(HashMap studentList) {
 
     ArrayList<String> buckets = new ArrayList<>();
-    for(int i = 0; i < bucketSize; i++) {
-      buckets.add(Integer.toString(i));
-
+    ArrayList localBucketArray = studentList.getBucketArray();
+    for(int i = 0; i < studentList.getBucketSize(); i++) {
+      //buckets.add(Integer.toString(i));
+      String hashInput = "";
+      
+      if(localBucketArray.get(i) != null){
+        do{
+          hashInput += (String) ((Node) localBucketArray.get(i)).getValue();
+        }
+        while((Node)((Node)(localBucketArray.get(i))).getNext() != null);
+      }
+      else{
+        hashInput = "0000";
+      }
+      // System.out.println(hashInput);
+      buckets.add(hashInput);
       // Calculate hash of each bucket here
       //...
       

@@ -42,6 +42,10 @@ class HashMap<K, V> {
     return index;
   }
 
+  public ArrayList getBucketArray() {
+    return this.bucketArray;
+  }
+
   public void add(K key, V value) {
     int bucketIndex = getBucketIndex(key);
     int hashCode = calcHashCode(key);
