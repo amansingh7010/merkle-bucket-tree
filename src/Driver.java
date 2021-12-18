@@ -5,8 +5,10 @@ import org.json.simple.parser.*;
 
 public class Driver {
 
-  private static final String ORIGINAL_JSON_FILE_PATH = "C:/Users/amans/OneDrive - University of New Brunswick/UNB Study/Fall 2021/CS-6545 - Big Data/Project/merkle-bucket-tree/resources/small_data_original.json";
-  private static final String MODIFIED_JSON_FILE_PATH = "C:/Users/amans/OneDrive - University of New Brunswick/UNB Study/Fall 2021/CS-6545 - Big Data/Project/merkle-bucket-tree/resources/small_data_tampered.json";
+  // private static final String ORIGINAL_JSON_FILE_PATH = "C:/Users/amans/OneDrive - University of New Brunswick/UNB Study/Fall 2021/CS-6545 - Big Data/Project/merkle-bucket-tree/resources/small_data_original.json";
+  // private static final String MODIFIED_JSON_FILE_PATH = "C:/Users/amans/OneDrive - University of New Brunswick/UNB Study/Fall 2021/CS-6545 - Big Data/Project/merkle-bucket-tree/resources/small_data_tampered.json";
+  private static final String ORIGINAL_JSON_FILE_PATH = "C:/Users/amans/OneDrive - University of New Brunswick/UNB Study/Fall 2021/CS-6545 - Big Data/Project/merkle-bucket-tree/resources/data_original.json";
+  private static final String MODIFIED_JSON_FILE_PATH = "C:/Users/amans/OneDrive - University of New Brunswick/UNB Study/Fall 2021/CS-6545 - Big Data/Project/merkle-bucket-tree/resources/data_tampered.json";
   private static final String VARIABLE_TO_READ = "studentList";
   private static final String KEY = "_id";
   private static final String VALUE = "name"; 
@@ -20,7 +22,7 @@ public class Driver {
     System.out.println("Generated Merkle bucket tree with head: " + merkleBucketTree.root);
 
     // Data Validation
-    merkleBucketTree.validate(tamperedHashMap, 4301);
+    merkleBucketTree.validate(tamperedHashMap, 506);
   }
 
   private static HashMap<Integer, String> read(String filePath) {
