@@ -1,36 +1,42 @@
 package src;
-
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
 public class Driver {
-  public static void main(String[] args) throws IOException, FileNotFoundException {
-    HashMap<Integer, String> studentList = new HashMap<>();
+
+  private static final String ORIGINAL_JSON_FILE_PATH = "C:/Users/amans/OneDrive - University of New Brunswick/UNB Study/Fall 2021/CS-6545 - Big Data/Project/merkle-bucket-tree/resources/data.json";
+  private static final String VARIABLE_TO_READ = "studentList";
+  private static final String KEY = "_id";
+  private static final String VALUE = "name"; 
+
+  public static void main(String[] args) {
+    HashMap<Integer, String> originalHashMap = read();
+    MerkleBucketTree merkleBucketTree = new MerkleBucketTree(originalHashMap);
+    System.out.println("Head: " + merkleBucketTree.root);
+  }
+
+  private static HashMap<Integer, String> read() {
+    HashMap<Integer, String> hashMap = new HashMap<>();
     JSONParser parser = new JSONParser();
 
-    try{
-      Object obj = parser.parse(new FileReader("C:/Users/amans/OneDrive - University of New Brunswick/UNB Study/Fall 2021/CS-6545 - Big Data/Project/merkle-bucket-tree/resources/data.json"));
+    try {
+      Object obj = parser.parse(new FileReader(ORIGINAL_JSON_FILE_PATH));
       JSONObject json = new JSONObject();
       json = (JSONObject) obj;
-      JSONArray jsonArray = (JSONArray) json.get("studentList");
-      for (int i = 0; i < jsonArray.size(); i++){
-        JSONObject student = (JSONObject) jsonArray.get(i);
-        long id = (long) student.get("_id");
-        String name = (String) student.get("name");
-        studentList.add((int) id, name);
-        // System.out.println(studentList.get((int) id));
-        // System.out.println(studentList);
+      JSONArray jsonArray = (JSONArray) json.get(VARIABLE_TO_READ);
+
+      for (int i = 0; i < jsonArray.size(); i++) {
+        JSONObject object = (JSONObject) jsonArray.get(i);
+        long key = (long) object.get(KEY);
+        String value = (String) object.get(VALUE);
+        hashMap.add((int) key, value);
       }
 
-      System.out.println("Number of Buckets: " + studentList.getBucketSize());
-      MerkleBucketTree merkleBucketTree = new MerkleBucketTree(studentList);
-      System.out.println("Head: " + merkleBucketTree.getRoot());
-    }
-    catch(Exception e){
+    } catch(Exception e) {
       e.printStackTrace();
     }
+    
+    return hashMap;
   }
 }

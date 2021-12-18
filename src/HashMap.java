@@ -35,7 +35,7 @@ class HashMap<K, V> {
     return Objects.hashCode(key);
   }
 
-  private int getBucketIndex(K key) {
+  public int getBucketIndex(K key) {
     int hashCode = calcHashCode(key);
     int index = hashCode % numberOfBuckets;
     index = index < 0 ? index * -1 : index;

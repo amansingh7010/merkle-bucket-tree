@@ -10,15 +10,21 @@ import java.util.Random;
 public class MerkleBucketTree<K,V> {
 
   String root;
+  private HashMap<K,V> hashMap;
+  private ArrayList<String> bucketHashes;
 
-  public MerkleBucketTree(HashMap<K, V> studentList) {
+  public MerkleBucketTree(HashMap<K, V> hashMap) {
+    this.hashMap = hashMap;
+    this.bucketHashes = generateBucketHashes();
+    this.root = generateMerkleTree(bucketHashes);
+  }
 
+  private ArrayList<String> generateBucketHashes() {
     ArrayList<String> buckets = new ArrayList<>();
-    ArrayList<Node<K, V>> localBucketArray = studentList.getBucketArray();
-    for(int i = 0; i < studentList.getBucketSize(); i++) {
+    for(int i = 0; i < hashMap.getBucketSize(); i++) {
       String hashInput = "";
-      if(localBucketArray.get(i) != null) {
-        Node<K,V> head = localBucketArray.get(i);
+      if(hashMap.getBucketArray().get(i) != null) {
+        Node<K,V> head = hashMap.getBucketArray().get(i);
         while(head.next != null) {
           hashInput +=  head.value;
           head = head.next;
@@ -31,12 +37,8 @@ public class MerkleBucketTree<K,V> {
 
       buckets.add(getSHA(hashInput));
     }
-    
-    this.root = generateMerkleTree(buckets);
-  }
 
-  public String getRoot() {
-    return this.root;
+    return buckets;
   }
 
   public static String getSHA(String input) {
