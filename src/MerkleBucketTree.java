@@ -5,7 +5,6 @@ import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class MerkleBucketTree<K,V> {
 
