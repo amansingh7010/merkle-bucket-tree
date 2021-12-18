@@ -21,17 +21,18 @@ public class MerkleBucketTree<K,V> {
 
   private ArrayList<String> generateBucketHashes() {
     ArrayList<String> buckets = new ArrayList<>();
+
     for(int i = 0; i < hashMap.getBucketSize(); i++) {
       String hashInput = "";
       if(hashMap.getBucketArray().get(i) != null) {
         Node<K,V> head = hashMap.getBucketArray().get(i);
-        while(head.next != null) {
+        
+        while(head != null) {
           hashInput +=  head.value;
           head = head.next;
         }
       } else {
-        byte[] array = new byte[7];
-        new Random().nextBytes(array);
+        byte[] array = new byte[i];
         hashInput = new String(array, Charset.forName("UTF-8"));
       }
 
@@ -91,6 +92,23 @@ public class MerkleBucketTree<K,V> {
     }
 
     return merkleTree(parentHashList);
+  }
+
+  public boolean validate(HashMap<Integer, String> newHashMap, K key) {
+    V value = hashMap.get(key);
+    if(value == null) {
+      System.err.println("Key does not exist.");
+      return false;
+    }
+
+    MerkleBucketTree<K,V> generatedTree = new MerkleBucketTree(newHashMap);
+    if(this.root.equals(generatedTree.root)) {
+      System.out.println("Data has not been tampered");
+      return true;
+    }
+
+    System.err.println("Data has been tampered");
+    return false;
   }
   
 }
