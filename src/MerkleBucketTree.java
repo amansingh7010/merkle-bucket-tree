@@ -1,39 +1,37 @@
 package src;
 
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MerkleBucketTree<K,V> {
 
   String root;
 
-  public MerkleBucketTree(HashMap studentList) {
+  public MerkleBucketTree(HashMap<K, V> studentList) {
 
     ArrayList<String> buckets = new ArrayList<>();
-    ArrayList localBucketArray = studentList.getBucketArray();
+    ArrayList<Node<K, V>> localBucketArray = studentList.getBucketArray();
     for(int i = 0; i < studentList.getBucketSize(); i++) {
-      //buckets.add(Integer.toString(i));
       String hashInput = "";
-      
-      if(localBucketArray.get(i) != null){
-        do{
-          hashInput += (String) ((Node) localBucketArray.get(i)).getValue();
+      if(localBucketArray.get(i) != null) {
+        Node<K,V> head = localBucketArray.get(i);
+        while(head.next != null) {
+          hashInput +=  head.value;
+          head = head.next;
         }
-        while((Node)((Node)(localBucketArray.get(i))).getNext() != null);
+      } else {
+        byte[] array = new byte[7];
+        new Random().nextBytes(array);
+        hashInput = new String(array, Charset.forName("UTF-8"));
       }
-      else{
-        hashInput = "0000";
-      }
-      // System.out.println(hashInput);
-      buckets.add(hashInput);
-      // Calculate hash of each bucket here
-      //...
-      
-    }
 
-    //Init
+      buckets.add(getSHA(hashInput));
+    }
+    
     this.root = generateMerkleTree(buckets);
   }
 

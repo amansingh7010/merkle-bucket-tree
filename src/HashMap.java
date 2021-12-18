@@ -42,7 +42,7 @@ class HashMap<K, V> {
     return index;
   }
 
-  public ArrayList getBucketArray() {
+  public ArrayList<Node<K, V>> getBucketArray() {
     return this.bucketArray;
   }
 
