@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 class HashMap<K, V> {
-  private final int DEFAULT_HASH_TABLE_SIZE = 10;
+  private final int DEFAULT_SIZE = 10;
   private final double LOAD_FACTOR = 0.8;
 
   private ArrayList<Node<K,V>> bucketArray;
@@ -13,7 +13,7 @@ class HashMap<K, V> {
 
   public HashMap() {
     this.bucketArray = new ArrayList<>();
-    this.numberOfBuckets = DEFAULT_HASH_TABLE_SIZE;
+    this.numberOfBuckets = DEFAULT_SIZE;
 
     // Current size of hash map
     this.currentSize = 0;
