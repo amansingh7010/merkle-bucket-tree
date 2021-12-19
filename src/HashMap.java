@@ -101,35 +101,4 @@ class HashMap<K, V> {
     return null;
   }
 
-  public V remove(K key) {
-    int bucketIndex = getBucketIndex(key);
-    int hashCode = calcHashCode(key);
-
-    Node<K, V> head = bucketArray.get(bucketIndex);
-    Node<K, V> prev = null;
-
-    while (head != null) {
-      if (head.key.equals(key) && head.hashCode == hashCode) {
-        break;
-      }
-
-      prev = head;
-      head = head.next;
-    }
-
-    if (head == null) {
-      return null;
-    }
-
-    this.currentSize--;
-
-    if (prev != null) {
-      prev.next = head.next;
-    } else {
-      bucketArray.set(bucketIndex, head.next);
-    }
-
-    return head.value;
-  }
-
 }
